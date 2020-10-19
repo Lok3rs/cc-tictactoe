@@ -1,5 +1,5 @@
 def init_board() -> list:
-    return [['X', '.', '.'], ['.', 'O', 'O'], ['X', '.', '.']]
+    return [['.', '.', '.'], ['.', '.', '.'], ['.', '.', '.']]
 
 def get_move(board: list) -> tuple:
     rows_dict = {"A": 0, "B": 1, "C": 2}
@@ -29,6 +29,7 @@ def mark(coordinates: tuple, player_mark: str, board: list) -> list:
 
 def has_won(board: list) -> bool:
     # possible winning configurations
+    global winning_combinations
     winning_combinations = [[board[0][0], board[0][1], board[0][2]],
                             [board[1][0], board[1][1], board[1][2]],
                             [board[2][0], board[2][1], board[2][2]],
@@ -62,5 +63,38 @@ def print_board(board: list) -> str:
 
     ''')
 
-def print_result() -> str:
+def print_result(board: list) -> str:
+    if has_won(board):
+        for win in winning_combinations:
+            if win[0] == win[1] == win[2]:
+                return f"{win[0]} has won!"
+    return "It's a tie!"
+
+def tictactoe_game():
+    game_board = init_board()
+    player_1 = "X"
+    player_2 = "O"
+    win = has_won(game_board)
+    full = is_full(game_board)
+
+    while not win or not full:
+        print(print_board(game_board))
+        print("Player X turn:")
+        coords = get_move(game_board)
+        game_board = mark(coords, player_1, game_board)
+        if has_won(game_board) or is_full(game_board):
+            break
+        print(print_board(game_board))
+        print("Player O turn")
+        coords = get_move(game_board)
+        game_board = mark(coords, player_2, game_board)
+        if has_won(game_board) or is_full(game_board):
+            break
+    
+
+    print(print_result(game_board))
+
+if __name__ == "__main__":
+    tictactoe_game()
+
     
