@@ -12,10 +12,8 @@ def get_move(board: list) -> tuple:
         user_input = input("Provide coordinates (quit to close program):  ")
         if user_input.lower() == "quit":
             sys.exit("See you again!")
-        # checks if user provide a valid coordinates
         if user_input.upper() in allowed_to_choose:
             coordinates = (rows_dict[user_input[0].upper()], int(user_input[1])-1)
-            # if he does, checks if they are unmarked yet. If yes, returns them
             if board[coordinates[0]][coordinates[1]] == ".":
                 return coordinates
             else:
@@ -43,27 +41,27 @@ def get_ai_move(board: list, unbeatable_ai = False) -> tuple or None:
                 return win[cur_combination.index(".")]
 
         coordinates = (random.randint(0, 2), random.randint(0, 2))
+
         if is_full(board):
             return None
+
         while board[coordinates[0]][coordinates[1]] != ".":
             coordinates = (random.randint(0, 2), random.randint(0, 2))
         return coordinates
+
     else:
         (m, row, column) = max(board)
         return (row, column)
 
 def mark(coordinates: tuple, player_mark: str, board: list) -> list:
     try:
-        # checks if chosen coordinate isn't marked yet, if True replace "." by players mark
         if board[coordinates[0]][coordinates[1]] == ".":
             board[coordinates[0]][coordinates[1]] = player_mark    
         return board
-    # exception for coordinates out of bounds
     except IndexError:
         return board
 
 def has_won(board: list) -> bool:
-    # possible winning configurations
     global winning_combinations
     winning_combinations = [[board[0][0], board[0][1], board[0][2]],
                             [board[1][0], board[1][1], board[1][2]],
@@ -73,14 +71,14 @@ def has_won(board: list) -> bool:
                             [board[0][2], board[1][2], board[2][2]],
                             [board[0][0], board[1][1], board[2][2]],
                             [board[0][2], board[1][1], board[2][0]]]
+
     for win in winning_combinations:
         if win[0] == win[1] == win[2] != '.':
             return True
-    # that return will only work if for loop won't find any winning configuration
+
     return False
 
 def is_full(board: list) -> bool:
-    # for loop checking every row for empty slots. If there is empty slot returns false, because 
     for row in board:
         if "." in row:
             return False
@@ -105,50 +103,42 @@ def print_result(board: list) -> str:
                 return f"{print_board(board)}\n\t{win[0]} has won!"
     return f"{print_board(board)}\n\tIt's a tie!"
 
-def is_end(board):
-    # Vertical win
+def who_wins(board: list) -> str or None:
     for i in range(0, 3):
         if (board[0][i] != '.' and
             board[0][i] == board[1][i] and
             board[1][i] == board[2][i]):
             return board[0][i]
 
-    # Horizontal win
     for i in range(0, 3):
         if (board[i].count("X") == 3):
             return 'X'
         elif (board[i].count("O") == 3):
             return 'O'
 
-    # Main diagonal win
     if (board[0][0] != '.' and
         board[0][0] == board[1][1] and
         board[0][0] == board[2][2]):
         return board[0][0]
 
-    # Second diagonal win
     if (board[0][2] != '.' and
         board[0][2] == board[1][1] and
         board[0][2] == board[2][0]):
         return board[0][2]
 
-    # Is whole board full?
     for i in range(0, 3):
         for j in range(0, 3):
-            # There's an empty field, we continue the game
             if (board[i][j] == '.'):
                 return None
 
-
     return '.'
 
-def max(board):
+def max(board: list) -> tuple:
     maxv = -2
-
     row = None
     column = None
 
-    result = is_end(board)
+    result = who_wins(board)
 
     if result == 'X':
         return (-1, 0, 0)
@@ -171,13 +161,12 @@ def max(board):
                 board[i][j] = '.'
     return (maxv, row, column)
 
-def min(board):
+def min(board: list) -> tuple:
     minv = 2
-
     row = None
     column = None
 
-    result = is_end(board)
+    result = who_wins(board)
 
     if result == 'X':
         return (-1, 0, 0)
@@ -191,15 +180,16 @@ def min(board):
             if board[i][j] == '.':
                 board[i][j] = 'X'
                 (m, max_i, max_j) = max(board)
+
                 if m < minv:
                     minv = m
                     row = i
                     column = j
-                board[i][j] = '.'
 
+                board[i][j] = '.'
     return (minv, row, column)
 
-def tictactoe_game(human_ai = False, ai_ai = False):
+def tictactoe_game(human_ai = False, ai_ai = False) -> None:
     game_board = init_board()
     player_1 = "X"
     player_2 = "O"
@@ -233,7 +223,7 @@ def tictactoe_game(human_ai = False, ai_ai = False):
     
     print(print_result(game_board))
 
-def main_menu():
+def main_menu() -> None:
     user_choose = input("Choose game option:\n 1 - Player vs. Player\n 2 - Player vs. AI\n 3 - AI vs AI\n")
     while user_choose not in ["1", "2", "3"]:
         user_choose = input("Invalid choose. Try again.")
