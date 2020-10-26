@@ -1,6 +1,3 @@
-from colorama import init
-from termcolor import colored
-
 def has_won(board: list) -> bool:
     # possible winning configurations
     winning_combinations = [[board[0][0], board[0][1], board[0][2]],
@@ -18,12 +15,13 @@ def has_won(board: list) -> bool:
     return False
 
 def is_full(board: list) -> bool:
-    # for loop checking every row for empty slots. If there is empty slot returns false, because 
+    # for loop checking every row for empty slots. If there is empty slot returns false
     for row in board:
         if "." in row:
             return False
     return True
 
+# function returning winning player mark (X or O)
 def who_wins(board) -> str or None:
     # Vertical win
     for i in range(0, 3):

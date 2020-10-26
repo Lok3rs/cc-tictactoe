@@ -29,7 +29,7 @@ def print_result(board: list) -> None:
     
     return print_board(board), print("\tIt's a tie!")
 
-def print_asci_art(option: int= 0) -> str:
+def print_asci_art(option: int= 0) -> None:
     if option == 1:
         return print('''
     ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄ 
