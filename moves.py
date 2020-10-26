@@ -4,6 +4,7 @@ import random
 from minimax import minimum, maximum
 from checks import is_full
 
+
 def get_move(board: list) -> tuple:
     rows_dict = {"A": 0, "B": 1, "C": 2}
     allowed_to_choose = ['A1', 'A2', 'A3', 'B1', 'B2', 'B3', 'C1', 'C2', 'C3']
@@ -49,14 +50,13 @@ def get_ai_move(board: list, unbeatable_ai = False) -> tuple or None:
         return coordinates
     else:
         (m, row, column) = maximum(board)
-        print(row, column)
         return (row, column)
 
 def mark(coordinates: tuple, player_mark: str, board: list) -> list:
     try:
         # checks if chosen coordinate isn't marked yet, if True replace "." by players mark
         if board[coordinates[0]][coordinates[1]] == ".":
-            board[coordinates[0]][coordinates[1]] = player_mark    
+            board[coordinates[0]][coordinates[1]] = player_mark
         return board
     # exception for coordinates out of bounds
     except IndexError:

@@ -88,9 +88,7 @@ def display_tictactoe_animation() -> None:
         os.system("clear || cls")
         print_asci_art(i)
         time.sleep(1)
-    for i in range(3):
-        os.system("clear || cls")
-        time.sleep(0.2)
-        print_asci_art()
-        time.sleep(0.25)
+    os.system("clear || cls")
+    time.sleep(1)
+    print_asci_art()
         

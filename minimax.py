@@ -3,8 +3,6 @@ from checks import who_wins
 def maximum(board):
     max_score = -2
 
-    row = None
-    column = None
 
     result = who_wins(board)
 
@@ -32,8 +30,6 @@ def maximum(board):
 def minimum(board):
     min_score = 2
 
-    row = None
-    column = None
 
     result = who_wins(board)
 

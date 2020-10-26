@@ -1,5 +1,6 @@
 import time
 import os
+from sys import exit
 
 from prints import print_board, print_result, display_tictactoe_animation
 from checks import has_won, is_full
@@ -49,11 +50,14 @@ def tictactoe_game(human_ai = False, ai_ai = False):
 def main_menu():
     os.system("clear || cls")
     display_tictactoe_animation()
-    user_choose = input("Choose game option:\n 1 - Player vs. Player\n 2 - Player vs. AI\n 3 - AI vs AI\n")
-    while user_choose not in ["1", "2", "3"]:
+    tabs = "\t" * 7
+    user_choose = input(f"{tabs}Choose game option:\n{tabs} 1 - Player vs. Player\n{tabs} 2 - Player vs. AI\n{tabs} 3 - AI vs AI\n{tabs} 0 - exit\n{tabs}")
+    while user_choose not in ["1", "2", "3", "0"]:
         user_choose = input("Invalid choose. Try again.")
     os.system("clear || cls")
-    if user_choose == "1":
+    if user_choose == "0":
+        exit("Thanks for playing! See you again!")
+    elif user_choose == "1":
         tictactoe_game()
     elif user_choose == "2":
         tictactoe_game(human_ai= True)
@@ -61,4 +65,16 @@ def main_menu():
         tictactoe_game(ai_ai=True)
 
 if __name__ == "__main__":
-    main_menu()
+    
+    while True:
+        main_menu()
+        valid_inputs = ["Y", "N"]
+        user_choose = input("Do you want to play again? (Y / N)\n")
+        while user_choose.upper() not in valid_inputs:
+            user_choose = input("Invalid input, try again.\t")
+        if user_choose.upper() == "Y":
+            continue
+        else:
+            os.system("clear || cls")
+            exit("Thanks for playing! See you again!")
+

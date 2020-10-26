@@ -1,3 +1,6 @@
+from colorama import init
+from termcolor import colored
+
 def has_won(board: list) -> bool:
     # possible winning configurations
     winning_combinations = [[board[0][0], board[0][1], board[0][2]],
@@ -9,7 +12,7 @@ def has_won(board: list) -> bool:
                             [board[0][0], board[1][1], board[2][2]],
                             [board[0][2], board[1][1], board[2][0]]]
     for win in winning_combinations:
-        if win[0] == win[1] == win[2] != '.':
+        if win.count("X") == 3 or win.count("O") == 3:
             return True
     # that return will only work if for loop won't find any winning configuration
     return False
