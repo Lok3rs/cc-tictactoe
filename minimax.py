@@ -1,4 +1,5 @@
 from checks import who_wins
+from termcolor import colored
 
 '''
 for unbeatable AI option we've used minimax algorithm. Those two videos are really usefull with understanding that method
@@ -10,14 +11,13 @@ https://www.youtube.com/watch?v=l-hh51ncgDI
 def maximum(board):
     # starting maximum score for return (Minimax Algorithm)
     max_score = -2
-
     # checks who's winning the game, usefull for function recurtion
     result = who_wins(board)
 
     # assembling points for result
-    if result == 'X':
+    if result == colored('X', "green"):
         return (-1, 0, 0)
-    elif result == 'O':
+    elif result == colored('O', "blue"):
         return (1, 0, 0)
     elif result == '.':
         return (0, 0, 0)
@@ -26,7 +26,7 @@ def maximum(board):
     for i in range(0, 3):
         for j in range(0, 3):
             if board[i][j] == '.':
-                board[i][j] = 'O'
+                board[i][j] = colored('O', "blue")
                 (m, min_i, min_j) = minimum(board)
                 # getting best coordinates for next move
                 if m > max_score:
@@ -44,9 +44,9 @@ def minimum(board):
 
     result = who_wins(board)
 
-    if result == 'X':
+    if result == colored('X', "green"):
         return (-1, 0, 0)
-    elif result == 'O':
+    elif result == colored('O', "blue"):
         return (1, 0, 0)
     elif result == '.':
         return (0, 0, 0)
@@ -54,7 +54,7 @@ def minimum(board):
     for i in range(0, 3):
         for j in range(0, 3):
             if board[i][j] == '.':
-                board[i][j] = 'X'
+                board[i][j] = colored('X', "green")
                 (m, max_i, max_j) = maximum(board)
                 if m < min_score:
                     min_score = m

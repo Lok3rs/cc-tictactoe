@@ -1,4 +1,7 @@
+from termcolor import colored
+
 def has_won(board: list) -> bool:
+    global winning_combinations
     # possible winning configurations
     winning_combinations = [[board[0][0], board[0][1], board[0][2]],
                             [board[1][0], board[1][1], board[1][2]],
@@ -9,7 +12,7 @@ def has_won(board: list) -> bool:
                             [board[0][0], board[1][1], board[2][2]],
                             [board[0][2], board[1][1], board[2][0]]]
     for win in winning_combinations:
-        if win.count("X") == 3 or win.count("O") == 3:
+        if win.count(colored("X", "green")) == 3 or win.count(colored("O", "blue")) == 3:
             return True
     # that return will only work if for loop won't find any winning configuration
     return False
@@ -33,9 +36,9 @@ def who_wins(board) -> str or None:
     # Horizontal win
     for i in range(0, 3):
         if (board[i].count("X") == 3):
-            return 'X'
+            return colored('X', "green")
         elif (board[i].count("O") == 3):
-            return 'O'
+            return colored('O', "blue")
 
     # Main diagonal win
     if (board[0][0] != '.' and
@@ -54,3 +57,6 @@ def who_wins(board) -> str or None:
         return None
 
     return '.'
+     
+
+    
